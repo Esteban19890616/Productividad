@@ -1,8 +1,8 @@
 // PRISMA — Listado y gestión completa de actividades
-import { apiGet, apiPost, apiUpload } from './api.js';
+import { apiGet, apiPost } from './api.js';
 import { requerirSesion } from './auth.js';
 import { montarNav } from './nav.js';
-import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo } from './ui.js';
+import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo, htmlEvidencias, cargarListaEvidencias, activarSubidaEvidencias } from './ui.js';
 
 let perfil = null;
 let cache = [];
@@ -146,13 +146,7 @@ async function abrirModalActividad(actividad = null) {
           <input type="number" id="fa-impacto" value="${actividad?.impacto ?? 3}" min="1" max="5" />
         </div>
       </div>
-      ${esEdicion ? `
-        <div class="field">
-          <label>Evidencias (fotos o PDF, máx. 4)</label>
-          <div id="evidencias-lista" style="margin-bottom:10px;"></div>
-          <input type="file" id="fa-evidencia-input" accept="image/png,image/jpeg,image/webp,application/pdf" multiple />
-        </div>
-      ` : ''}
+      ${esEdicion ? htmlEvidencias('fa-evidencia') : ''}
       <div style="display:flex; gap:10px;">
         <button type="submit" class="btn btn-primary" style="flex:1">${esEdicion ? 'Guardar cambios' : 'Crear actividad'}</button>
         ${esEdicion ? `<button type="button" class="btn btn-danger" id="btn-eliminar">Eliminar</button>` : ''}
@@ -161,25 +155,8 @@ async function abrirModalActividad(actividad = null) {
   `);
 
   if (esEdicion) {
-    renderEvidencias(actividad.id);
-    document.getElementById('fa-evidencia-input').addEventListener('change', async (e) => {
-      const archivos = e.target.files;
-      if (!archivos.length) return;
-      const formData = new FormData();
-      formData.append('actividad_id', actividad.id);
-      for (const archivo of archivos) formData.append('archivos[]', archivo);
-
-      try {
-        await apiUpload('/documentos.php', formData);
-      } catch (err) {
-        toast('Error subiendo evidencia: ' + err.message, 'error');
-        e.target.value = '';
-        return;
-      }
-      e.target.value = '';
-      toast('Evidencia subida', 'success');
-      renderEvidencias(actividad.id);
-    });
+    cargarListaEvidencias('fa-evidencia', actividad.id);
+    activarSubidaEvidencias('fa-evidencia', actividad.id);
   }
 
   document.getElementById('form-actividad').addEventListener('submit', async (e) => {
@@ -229,51 +206,6 @@ async function abrirModalActividad(actividad = null) {
     cerrarModal();
     toast('Actividad eliminada', 'success');
     cargar();
-  });
-}
-
-async function renderEvidencias(actividadId) {
-  const cont = document.getElementById('evidencias-lista');
-  if (!cont) return;
-  cont.innerHTML = `<div class="skeleton" style="height:24px;"></div>`;
-
-  let documentos = [];
-  try {
-    ({ documentos } = await apiGet('/documentos.php', { actividad_id: actividadId }));
-  } catch (e) {
-    cont.innerHTML = `<div style="color:var(--critica); font-size:13px;">Error: ${escapeHtml(e.message)}</div>`;
-    return;
-  }
-
-  if (documentos.length === 0) {
-    cont.innerHTML = `<div style="color:var(--text-muted); font-size:13px;">Sin evidencias todavía.</div>`;
-    return;
-  }
-
-  cont.innerHTML = documentos.map(d => {
-    const esImagen = d.tipo.startsWith('image/');
-    return `
-      <div style="display:flex; align-items:center; gap:10px; padding:6px 0;">
-        ${esImagen
-          ? `<a href="../${d.ruta_archivo}" target="_blank"><img src="../${d.ruta_archivo}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" /></a>`
-          : `<a href="../${d.ruta_archivo}" target="_blank" style="font-size:22px;">📄</a>`
-        }
-        <a href="../${d.ruta_archivo}" target="_blank" style="flex:1; font-size:13px; color:var(--text-primary);">${escapeHtml(d.nombre)}</a>
-        <button type="button" class="btn btn-sm btn-danger" data-doc-id="${d.id}">Quitar</button>
-      </div>
-    `;
-  }).join('');
-
-  cont.querySelectorAll('[data-doc-id]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      try {
-        await apiPost('/documentos.php', { accion: 'eliminar', id: btn.dataset.docId });
-      } catch (e) {
-        toast('Error: ' + e.message, 'error');
-        return;
-      }
-      renderEvidencias(actividadId);
-    });
   });
 }
 

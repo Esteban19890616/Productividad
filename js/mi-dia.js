@@ -1,8 +1,8 @@
 // PRISMA — Lógica de "Mi día"
-import { apiGet, apiPost, apiUpload } from './api.js';
+import { apiGet, apiPost } from './api.js';
 import { requerirSesion } from './auth.js';
 import { montarNav } from './nav.js';
-import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo } from './ui.js';
+import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo, htmlEvidencias, cargarListaEvidencias, activarSubidaEvidencias } from './ui.js';
 
 const HOY = new Date().toISOString().slice(0, 10);
 
@@ -142,25 +142,18 @@ function abrirModalCompletar(id, titulo) {
   abrirModal(`
     <div class="modal-header"><h3>Completar: ${escapeHtml(titulo)}</h3></div>
     <p style="color:var(--text-secondary); font-size:14px; margin-bottom:12px;">
-      Puedes adjuntar hasta 4 fotos o PDF como evidencia de que se ejecutó (opcional).
+      Puedes adjuntar evidencia de que se ejecutó (opcional).
     </p>
-    <div class="field">
-      <input type="file" id="completar-evidencia" accept="image/png,image/jpeg,image/webp,application/pdf" multiple />
-    </div>
+    ${htmlEvidencias('completar-evidencia')}
     <button type="button" class="btn btn-primary" style="width:100%" id="btn-confirmar-completar">Marcar como completada</button>
   `);
+
+  cargarListaEvidencias('completar-evidencia', id);
+  activarSubidaEvidencias('completar-evidencia', id);
 
   document.getElementById('btn-confirmar-completar').addEventListener('click', async () => {
     try {
       await apiPost('/actividades.php', { accion: 'completar', id });
-
-      const archivos = document.getElementById('completar-evidencia').files;
-      if (archivos.length) {
-        const formData = new FormData();
-        formData.append('actividad_id', id);
-        for (const archivo of archivos) formData.append('archivos[]', archivo);
-        await apiUpload('/documentos.php', formData);
-      }
     } catch (e) {
       toast('Error: ' + e.message, 'error');
       return;
