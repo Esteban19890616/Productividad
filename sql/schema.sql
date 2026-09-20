@@ -57,7 +57,7 @@ CREATE TABLE empresas (
   contacto_nombre VARCHAR(255) NULL,
   contacto_email VARCHAR(255) NULL,
   contacto_telefono VARCHAR(50) NULL,
-  color VARCHAR(20) NOT NULL DEFAULT '#4ee1ff',
+  color VARCHAR(20) NOT NULL DEFAULT '#7fae7a',
   activa TINYINT(1) NOT NULL DEFAULT 1,
   creado_por VARCHAR(40) NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

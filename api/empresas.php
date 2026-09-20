@@ -40,7 +40,7 @@ if ($accion === 'crear') {
             $id, $nombre,
             $body['nit'] ?? null, $body['contacto_nombre'] ?? null,
             $body['contacto_email'] ?? null, $body['contacto_telefono'] ?? null,
-            $body['color'] ?? '#4ee1ff', $sesion['id'],
+            $body['color'] ?? '#7fae7a', $sesion['id'],
         ]);
     responder(['ok' => true, 'id' => $id]);
 
@@ -54,7 +54,7 @@ if ($accion === 'crear') {
             trim((string) ($body['nombre'] ?? '')),
             $body['nit'] ?? null, $body['contacto_nombre'] ?? null,
             $body['contacto_email'] ?? null, $body['contacto_telefono'] ?? null,
-            $body['color'] ?? '#4ee1ff', !empty($body['activa']) ? 1 : 0,
+            $body['color'] ?? '#7fae7a', !empty($body['activa']) ? 1 : 0,
             $id,
         ]);
     responder(['ok' => true]);

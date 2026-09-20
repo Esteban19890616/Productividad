@@ -1,64 +1,53 @@
 /* PRISMA — Sistema de diseño
-   Futurista pero cálido: fondos oscuros profundos, acentos en gradiente
-   cian→violeta, tarjetas con vidrio esmerilado, tipografía Inter/Sora. */
+   "Bosque en calma": paleta clara y cálida (verdes suaves + café muy claro)
+   para transmitir tranquilidad y equilibrio, con un fondo sutil de hojas
+   traslúcidas. Tipografía Inter/Sora. */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
 
 :root {
-  /* Paleta base — modo oscuro (por defecto) */
-  --bg-0: #05070d;
-  --bg-1: #0b0f1a;
-  --bg-2: #121729;
-  --bg-3: #1a2036;
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-hover: rgba(255, 255, 255, 0.07);
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.16);
+  /* Paleta base — clara, cálida, tonos bosque */
+  --bg-0: #f5f3e8;
+  --bg-1: #fefdf8;
+  --bg-2: #eef1e2;
+  --bg-3: #e3e9d4;
+  --surface: rgba(74, 109, 65, 0.05);
+  --surface-hover: rgba(74, 109, 65, 0.09);
+  --border: rgba(63, 87, 58, 0.14);
+  --border-strong: rgba(63, 87, 58, 0.24);
 
-  --text-primary: #eef1fb;
-  --text-secondary: #9aa3c0;
-  --text-muted: #6b7394;
+  --text-primary: #2e3a2b;
+  --text-secondary: #5c6e56;
+  --text-muted: #8a9682;
 
-  --accent-cian: #4ee1ff;
-  --accent-violeta: #9b6bff;
+  /* Acentos: verde claro -> verde bosque, con un toque café claro de apoyo */
+  --accent-cian: #9bc98a;
+  --accent-violeta: #5f9868;
+  --accent-cafe: #c9ad7d;
   --accent-gradient: linear-gradient(135deg, var(--accent-cian), var(--accent-violeta));
 
-  --critica: #ff4d6d;
-  --alta: #ff9f43;
-  --media: #ffd166;
-  --baja: #4ecb71;
-  --info: #4ee1ff;
+  /* Prioridades/estado en tonos tierra, suaves y no alarmantes */
+  --critica: #c1694f;
+  --alta: #cf9a54;
+  --media: #b9a552;
+  --baja: #6a9a63;
+  --info: #6f9c93;
 
-  --critica-bg: rgba(255, 77, 109, 0.14);
-  --alta-bg: rgba(255, 159, 67, 0.14);
-  --media-bg: rgba(255, 209, 102, 0.14);
-  --baja-bg: rgba(78, 203, 113, 0.14);
-  --info-bg: rgba(78, 225, 255, 0.14);
+  --critica-bg: rgba(193, 105, 79, 0.14);
+  --alta-bg: rgba(207, 154, 84, 0.16);
+  --media-bg: rgba(185, 165, 82, 0.16);
+  --baja-bg: rgba(106, 154, 99, 0.16);
+  --info-bg: rgba(111, 156, 147, 0.16);
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 0 40px rgba(78, 225, 255, 0.08);
+  --shadow-card: 0 8px 28px rgba(63, 87, 58, 0.10);
+  --shadow-glow: 0 0 40px rgba(155, 201, 138, 0.18);
 
   --font-display: 'Sora', 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 
-  color-scheme: dark;
-}
-
-:root[data-theme="light"] {
-  --bg-0: #f4f6fb;
-  --bg-1: #ffffff;
-  --bg-2: #eef1fb;
-  --bg-3: #e4e9fa;
-  --surface: rgba(20, 25, 45, 0.03);
-  --surface-hover: rgba(20, 25, 45, 0.06);
-  --border: rgba(20, 25, 45, 0.09);
-  --border-strong: rgba(20, 25, 45, 0.16);
-  --text-primary: #12162a;
-  --text-secondary: #4b5171;
-  --text-muted: #7a80a0;
   color-scheme: light;
 }
 
@@ -75,14 +64,16 @@ html, body {
 
 body {
   background-image:
-    radial-gradient(circle at 15% 0%, rgba(78, 225, 255, 0.08), transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(155, 107, 255, 0.08), transparent 45%);
-  background-attachment: fixed;
+    radial-gradient(circle at 12% 0%, rgba(155, 201, 138, 0.16), transparent 42%),
+    radial-gradient(circle at 88% 18%, rgba(201, 173, 125, 0.13), transparent 48%),
+    url("../assets/img/hojas-fondo.svg");
+  background-repeat: no-repeat, no-repeat, repeat;
+  background-attachment: fixed, fixed, fixed;
 }
 
 h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
 
-a { color: var(--accent-cian); text-decoration: none; }
+a { color: var(--accent-violeta); text-decoration: none; }
 
 .hidden { display: none !important; }
 
@@ -151,7 +142,7 @@ a { color: var(--accent-cian); text-decoration: none; }
 }
 
 .nav-link:hover { background: var(--surface-hover); color: var(--text-primary); }
-.nav-link.active { background: var(--surface); color: var(--text-primary); box-shadow: inset 2px 0 0 var(--accent-cian); }
+.nav-link.active { background: var(--surface); color: var(--text-primary); box-shadow: inset 2px 0 0 var(--accent-violeta); }
 .nav-link .icon { font-size: 16px; width: 20px; text-align: center; }
 
 .nav-section-label {
@@ -195,7 +186,7 @@ a { color: var(--accent-cian); text-decoration: none; }
   width: 30px; height: 30px; border-radius: 50%;
   background: var(--accent-gradient);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 13px; color: #05070d;
+  font-weight: 700; font-size: 13px; color: #1f2e1c;
 }
 
 /* ---------- Cards ---------- */
@@ -315,11 +306,11 @@ a { color: var(--accent-cian); text-decoration: none; }
 .btn-primary {
   background: var(--accent-gradient);
   border: none;
-  color: #05070d;
+  color: #1f2e1c;
 }
-.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:hover { filter: brightness(1.05); }
 
-.btn-danger { border-color: rgba(255,77,109,0.4); color: var(--critica); }
+.btn-danger { border-color: rgba(193,105,79,0.4); color: var(--critica); }
 .btn-sm { padding: 6px 12px; font-size: 13px; }
 .btn-icon { width: 36px; height: 36px; padding: 0; border-radius: 50%; }
 
@@ -338,8 +329,8 @@ input, select, textarea {
 }
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--accent-cian);
-  box-shadow: 0 0 0 3px rgba(78, 225, 255, 0.15);
+  border-color: var(--accent-violeta);
+  box-shadow: 0 0 0 3px rgba(95, 152, 104, 0.18);
 }
 
 .field { margin-bottom: 16px; }

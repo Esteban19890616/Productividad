@@ -58,7 +58,7 @@ function abrirModalEmpresa(empresa = null) {
       <div class="field"><label>NIT (opcional)</label><input type="text" id="em-nit" value="${escapeHtml(empresa?.nit || '')}" /></div>
       <div class="field-row">
         <div class="field"><label>Contacto</label><input type="text" id="em-contacto" value="${escapeHtml(empresa?.contacto_nombre || '')}" /></div>
-        <div class="field"><label>Color</label><input type="color" id="em-color" value="${empresa?.color || '#4ee1ff'}" /></div>
+        <div class="field"><label>Color</label><input type="color" id="em-color" value="${empresa?.color || '#7fae7a'}" /></div>
       </div>
       <div class="field-row">
         <div class="field"><label>Correo contacto</label><input type="email" id="em-email" value="${escapeHtml(empresa?.contacto_email || '')}" /></div>

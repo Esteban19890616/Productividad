@@ -5,7 +5,7 @@ import { montarNav } from './nav.js';
 import { toast, escapeHtml } from './ui.js';
 
 const DIAS = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-const COLORES = ['#ff4d6d', '#ff9f43', '#ffd166', '#4ecb71', '#4ee1ff', '#9b6bff'];
+const COLORES = ['#a9c98f', '#c9ad7d', '#d6c179', '#8fb5a8', '#b58f7a', '#7fae7a'];
 
 async function init() {
   const session = await requerirSesion();

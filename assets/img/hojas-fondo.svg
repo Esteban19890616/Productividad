@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="520" viewBox="0 0 520 520">
+  <defs>
+    <path id="hoja" d="M0,-42 C22,-32 24,10 0,42 C-24,10 -22,-32 0,-42 Z"/>
+  </defs>
+  <g fill="#6f9a63">
+    <use href="#hoja" opacity="0.055" transform="translate(60,70) rotate(20) scale(1.1)"/>
+    <use href="#hoja" opacity="0.04"  transform="translate(150,40) rotate(-35) scale(0.7)"/>
+    <use href="#hoja" opacity="0.06"  transform="translate(400,90) rotate(60) scale(0.9)"/>
+    <use href="#hoja" opacity="0.045" transform="translate(320,180) rotate(-10) scale(1.3)"/>
+    <use href="#hoja" opacity="0.05"  transform="translate(470,260) rotate(15) scale(0.8)"/>
+    <use href="#hoja" opacity="0.04"  transform="translate(30,300) rotate(80) scale(1.0)"/>
+    <use href="#hoja" opacity="0.06"  transform="translate(200,340) rotate(-50) scale(0.6)"/>
+    <use href="#hoja" opacity="0.045" transform="translate(120,450) rotate(30) scale(1.2)"/>
+    <use href="#hoja" opacity="0.05"  transform="translate(430,440) rotate(-20) scale(0.85)"/>
+    <use href="#hoja" opacity="0.04"  transform="translate(260,230) rotate(45) scale(0.5)"/>
+  </g>
+  <g fill="#b99a68">
+    <use href="#hoja" opacity="0.04" transform="translate(230,60) rotate(-25) scale(0.75)"/>
+    <use href="#hoja" opacity="0.035" transform="translate(80,190) rotate(50) scale(0.9)"/>
+    <use href="#hoja" opacity="0.04" transform="translate(380,340) rotate(-60) scale(0.7)"/>
+    <use href="#hoja" opacity="0.035" transform="translate(490,60) rotate(10) scale(0.65)"/>
+  </g>
+</svg>
