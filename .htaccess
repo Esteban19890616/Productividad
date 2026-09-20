@@ -1,0 +1,16 @@
+# PRISMA se actualiza seguido vía despliegues de Git. Sin esto, los
+# navegadores (sobre todo en celular) pueden seguir usando una copia vieja
+# de un .js/.css en caché durante días, mostrando una versión desactualizada
+# de la app aunque el servidor ya tenga los cambios nuevos.
+#
+# "no-cache" NO significa "no guardar nada": el navegador sí guarda el
+# archivo, pero antes de reusarlo SIEMPRE le pregunta al servidor "¿sigue
+# vigente?" (petición condicional muy liviana). Si no cambió, el servidor
+# responde "304 Not Modified" sin reenviar el archivo completo; si cambió,
+# lo manda de una. Así siempre se ve la versión más reciente sin perder la
+# velocidad de la caché.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
