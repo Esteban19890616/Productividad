@@ -185,7 +185,7 @@ function render(desde, hasta) {
 
     ${bloquePersonas}
 
-    <div class="card">
+    <div class="card" style="margin-bottom:18px;">
       <div class="card-header">
         <h3>Detalle de actividades</h3>
         <span class="count">${desde} → ${hasta}</span>
@@ -201,11 +201,14 @@ function render(desde, hasta) {
               <th style="padding:8px;">Fecha límite</th>
               <th style="padding:8px;">Estado</th>
               <th style="padding:8px;">Prioridad</th>
-              <th style="padding:8px;">Evidencias</th>
+              <th style="padding:8px;">Evidencia</th>
             </tr>
           </thead>
           <tbody>
-            ${filasInforme.map(a => `
+            ${filasInforme.map(a => {
+              const fotos = (a.evidencias || []).filter(d => d.tipo.startsWith('image/')).length;
+              const anexos = (a.evidencias || []).filter(d => d.tipo === 'application/pdf').length;
+              return `
               <tr style="border-top:1px solid var(--border);">
                 <td style="padding:8px;">${escapeHtml(a.titulo)}</td>
                 <td style="padding:8px;">${escapeHtml(a.proyecto_nombre || '—')}</td>
@@ -214,24 +217,82 @@ function render(desde, hasta) {
                 <td style="padding:8px;">${formatearFecha(a.fecha_limite)}</td>
                 <td style="padding:8px;">${a.estado}</td>
                 <td style="padding:8px;">${a.prioridad_etiqueta !== 'N/A' ? `<span class="badge badge-${a.prioridad_etiqueta}">${a.prioridad_etiqueta}</span>` : '—'}</td>
-                <td style="padding:8px;">${renderEvidenciasInforme(a.evidencias)}</td>
+                <td style="padding:8px; color:var(--text-muted); font-size:12px;">
+                  ${fotos ? `📷 ${fotos}` : ''} ${anexos ? `📎 ${anexos}` : ''} ${!fotos && !anexos ? '—' : ''}
+                </td>
               </tr>
-            `).join('')}
+            `;
+            }).join('')}
           </tbody>
         </table>
       </div>
     </div>
+
+    ${renderEvidenciaFotografica()}
+    ${renderAnexos()}
   `;
 }
 
-function renderEvidenciasInforme(evidencias) {
-  if (!evidencias || evidencias.length === 0) return '<span style="color:var(--text-muted);">—</span>';
-  return `<div style="display:flex; gap:4px; flex-wrap:wrap;">${evidencias.map(d => {
-    const esImagen = d.tipo.startsWith('image/');
-    return esImagen
-      ? `<a href="../${d.ruta_archivo}" target="_blank"><img src="../${d.ruta_archivo}" style="width:32px;height:32px;object-fit:cover;border-radius:4px;" title="${escapeHtml(d.nombre)}" /></a>`
-      : `<a href="../${d.ruta_archivo}" target="_blank" title="${escapeHtml(d.nombre)}" style="font-size:18px;">📄</a>`;
-  }).join('')}</div>`;
+// Fotos grandes, agrupadas por actividad -- como el registro fotográfico de un informe formal.
+function renderEvidenciaFotografica() {
+  const conFotos = filasInforme
+    .map(a => ({ actividad: a, fotos: (a.evidencias || []).filter(d => d.tipo.startsWith('image/')) }))
+    .filter(x => x.fotos.length > 0);
+
+  if (conFotos.length === 0) return '';
+
+  return `
+    <div class="card" id="card-evidencia-fotografica" style="margin-bottom:18px;">
+      <div class="card-header"><h3>Evidencia fotográfica</h3></div>
+      ${conFotos.map(({ actividad, fotos }) => `
+        <div style="margin-bottom:22px;">
+          <div style="font-weight:600; font-size:14px; margin-bottom:2px;">${escapeHtml(actividad.titulo)}</div>
+          <div style="color:var(--text-muted); font-size:12px; margin-bottom:10px;">
+            ${actividad.empresa_nombre ? escapeHtml(actividad.empresa_nombre) + ' · ' : ''}
+            ${actividad.responsable_nombre ? escapeHtml(actividad.responsable_nombre) + ' · ' : ''}
+            ${formatearFecha(actividad.fecha_limite)}
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:12px;">
+            ${fotos.map(f => `
+              <a href="../${f.ruta_archivo}" target="_blank" style="display:block;">
+                <img src="../${f.ruta_archivo}" alt="${escapeHtml(f.nombre)}"
+                     style="width:100%; height:200px; object-fit:cover; border-radius:var(--radius-md); border:1px solid var(--border);" />
+              </a>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// PDFs numerados como anexos, al final del informe -- no mezclados entre las fotos.
+function renderAnexos() {
+  const anexos = [];
+  filasInforme.forEach(a => {
+    (a.evidencias || []).filter(d => d.tipo === 'application/pdf').forEach(d => {
+      anexos.push({ actividad: a.titulo, doc: d });
+    });
+  });
+
+  if (anexos.length === 0) return '';
+
+  return `
+    <div class="card" id="card-anexos">
+      <div class="card-header"><h3>Anexos</h3></div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        ${anexos.map(({ actividad, doc }, i) => `
+          <a href="../${doc.ruta_archivo}" target="_blank" class="activity-row" style="text-decoration:none;">
+            <span style="font-size:20px;">📄</span>
+            <div style="flex:1">
+              <div class="title">Anexo ${i + 1} — ${escapeHtml(doc.nombre)}</div>
+              <div class="meta">${escapeHtml(actividad)}</div>
+            </div>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `;
 }
 
 function descargarCsv() {

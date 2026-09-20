@@ -12,6 +12,10 @@
       .main { padding: 0 !important; max-width: none !important; }
       body { background: white !important; color: black !important; }
       .card { border: 1px solid #ccc !important; box-shadow: none !important; break-inside: avoid; }
+      /* Las tarjetas de evidencia/anexos pueden ser largas: que la tarjeta
+         se parta entre páginas, pero nunca a mitad de una foto o un anexo. */
+      #card-evidencia-fotografica, #card-anexos { break-inside: auto; }
+      #card-evidencia-fotografica > div, #card-anexos > div > a { break-inside: avoid; }
     }
   </style>
 </head>
