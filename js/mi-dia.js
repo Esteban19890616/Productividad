@@ -2,7 +2,12 @@
 import { apiGet, apiPost } from './api.js';
 import { requerirSesion } from './auth.js';
 import { montarNav } from './nav.js';
-import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo, htmlEvidencias, cargarListaEvidencias, activarSubidaEvidencias } from './ui.js';
+import {
+  toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo,
+  htmlEvidencias, cargarListaEvidencias, activarSubidaEvidencias,
+  htmlSubtareas, cargarListaSubtareas, activarAltaSubtareas,
+  htmlObservaciones, cargarListaObservaciones, activarAltaObservaciones,
+} from './ui.js';
 
 const HOY = new Date().toISOString().slice(0, 10);
 
@@ -144,12 +149,18 @@ function abrirModalCompletar(id, titulo) {
     <p style="color:var(--text-secondary); font-size:14px; margin-bottom:12px;">
       Puedes adjuntar evidencia de que se ejecutó (opcional).
     </p>
+    ${htmlSubtareas('completar-sub')}
     ${htmlEvidencias('completar-evidencia')}
+    ${htmlObservaciones('completar-obs')}
     <button type="button" class="btn btn-primary" style="width:100%" id="btn-confirmar-completar">Marcar como completada</button>
   `);
 
+  cargarListaSubtareas('completar-sub', id);
+  activarAltaSubtareas('completar-sub', id);
   cargarListaEvidencias('completar-evidencia', id);
   activarSubidaEvidencias('completar-evidencia', id);
+  cargarListaObservaciones('completar-obs', id);
+  activarAltaObservaciones('completar-obs', id);
 
   document.getElementById('btn-confirmar-completar').addEventListener('click', async () => {
     try {
@@ -198,7 +209,7 @@ function abrirModalReprogramar(actividadId, titulo, minutosEstimados) {
   document.getElementById('btn-dividir').addEventListener('click', async () => {
     const titulos = [1, 2, 3].map(n => `Parte ${n}/3 — ${titulo}`);
     try {
-      await apiPost('/subactividades.php', { actividad_id: actividadId, titulos });
+      await apiPost('/subactividades.php', { accion: 'crear_multiples', actividad_id: actividadId, titulos });
       await apiPost('/actividades.php', { accion: 'actualizar', id: actividadId, estado: 'EN_PROGRESO' });
     } catch (e) {
       toast('Error al dividir: ' + e.message, 'error');

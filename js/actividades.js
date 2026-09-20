@@ -2,7 +2,12 @@
 import { apiGet, apiPost } from './api.js';
 import { requerirSesion } from './auth.js';
 import { montarNav } from './nav.js';
-import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo, htmlEvidencias, cargarListaEvidencias, activarSubidaEvidencias } from './ui.js';
+import {
+  toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo,
+  htmlEvidencias, cargarListaEvidencias, activarSubidaEvidencias,
+  htmlSubtareas, cargarListaSubtareas, activarAltaSubtareas,
+  htmlObservaciones, cargarListaObservaciones, activarAltaObservaciones,
+} from './ui.js';
 
 let perfil = null;
 let cache = [];
@@ -146,7 +151,9 @@ async function abrirModalActividad(actividad = null) {
           <input type="number" id="fa-impacto" value="${actividad?.impacto ?? 3}" min="1" max="5" />
         </div>
       </div>
+      ${esEdicion ? htmlSubtareas('fa-sub') : ''}
       ${esEdicion ? htmlEvidencias('fa-evidencia') : ''}
+      ${esEdicion ? htmlObservaciones('fa-obs') : ''}
       <div style="display:flex; gap:10px;">
         <button type="submit" class="btn btn-primary" style="flex:1">${esEdicion ? 'Guardar cambios' : 'Crear actividad'}</button>
         ${esEdicion ? `<button type="button" class="btn btn-danger" id="btn-eliminar">Eliminar</button>` : ''}
@@ -155,8 +162,12 @@ async function abrirModalActividad(actividad = null) {
   `);
 
   if (esEdicion) {
+    cargarListaSubtareas('fa-sub', actividad.id);
+    activarAltaSubtareas('fa-sub', actividad.id);
     cargarListaEvidencias('fa-evidencia', actividad.id);
     activarSubidaEvidencias('fa-evidencia', actividad.id);
+    cargarListaObservaciones('fa-obs', actividad.id);
+    activarAltaObservaciones('fa-obs', actividad.id);
   }
 
   document.getElementById('form-actividad').addEventListener('submit', async (e) => {

@@ -392,6 +392,44 @@ input:focus, select:focus, textarea:focus {
 }
 .auth-switch { text-align: center; margin-top: 18px; font-size: 13px; color: var(--text-secondary); }
 
+/* ---------- Subtareas ---------- */
+.subtarea-item {
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+}
+.subtarea-item:last-child { border-bottom: none; }
+.subtarea-fila { display: flex; align-items: center; gap: 10px; }
+.subtarea-fila input[type="checkbox"] { width: 18px; height: 18px; flex: none; }
+.subtarea-titulo { flex: 1; font-size: 14px; overflow-wrap: break-word; }
+.subtarea-titulo.completada { text-decoration: line-through; color: var(--text-muted); }
+.subtarea-obs {
+  margin: 8px 0 4px 28px;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Observaciones (comentarios de trabajo) ---------- */
+.obs-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.obs-item:last-child { border-bottom: none; }
+
+.btn-link {
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.btn-link:hover { color: var(--text-primary); }
+.btn-link-danger:hover { color: var(--critica); }
+
 /* ---------- Empty / loading states ---------- */
 .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
 .empty-state .icon { font-size: 32px; margin-bottom: 10px; }

@@ -159,6 +159,7 @@ CREATE TABLE subactividades (
   actividad_id VARCHAR(40) NOT NULL,
   titulo VARCHAR(255) NOT NULL,
   completada TINYINT(1) NOT NULL DEFAULT 0,
+  completada_at DATETIME NULL,
   responsable_id VARCHAR(40) NULL,
   orden INT NOT NULL DEFAULT 0,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -166,6 +167,28 @@ CREATE TABLE subactividades (
   FOREIGN KEY (actividad_id) REFERENCES actividades(id) ON DELETE CASCADE,
   FOREIGN KEY (responsable_id) REFERENCES usuarios(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ============================================================
+-- OBSERVACIONES: comentarios de trabajo manuales sobre una actividad o una
+-- subactividad puntual. A diferencia de la `bitacora` (automática e
+-- inmutable, generada por triggers), esto lo escribe la persona a mano para
+-- explicar qué hizo o dejar algo por tener en cuenta.
+-- ============================================================
+CREATE TABLE observaciones (
+  id VARCHAR(40) PRIMARY KEY,
+  actividad_id VARCHAR(40) NOT NULL,
+  subactividad_id VARCHAR(40) NULL,
+  usuario_id VARCHAR(40) NOT NULL,
+  texto TEXT NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (actividad_id) REFERENCES actividades(id) ON DELETE CASCADE,
+  FOREIGN KEY (subactividad_id) REFERENCES subactividades(id) ON DELETE CASCADE,
+  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE INDEX idx_observaciones_actividad ON observaciones(actividad_id);
+CREATE INDEX idx_observaciones_subactividad ON observaciones(subactividad_id);
+CREATE INDEX idx_observaciones_created_at ON observaciones(created_at);
 
 CREATE TABLE dependencias_actividad (
   actividad_id VARCHAR(40) NOT NULL,
