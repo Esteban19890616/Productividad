@@ -24,6 +24,7 @@ async function init() {
   }
 
   cont.innerHTML = `
+    <div style="overflow-x:auto;">
     <table style="width:100%; border-collapse:collapse;">
       <thead>
         <tr style="text-align:left; color:var(--text-muted); font-size:12px; text-transform:uppercase;">
@@ -55,6 +56,7 @@ async function init() {
         `).join('')}
       </tbody>
     </table>
+    </div>
   `;
 }
 

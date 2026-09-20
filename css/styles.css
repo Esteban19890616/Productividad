@@ -232,6 +232,18 @@ a { color: var(--accent-cian); text-decoration: none; }
 @media (max-width: 640px) {
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .main { padding: 20px 16px 48px; }
+
+  .topbar { flex-wrap: wrap; }
+  .topbar h1 { font-size: 21px; }
+
+  .field-row { flex-direction: column; gap: 0; }
+
+  .activity-row { flex-wrap: wrap; row-gap: 8px; }
+  .activity-row .title, .activity-row .meta { min-width: 0; overflow-wrap: break-word; }
+
+  .card { padding: 16px; }
+  .modal { padding: 20px; }
+  .modal-backdrop { padding: 12px; }
 }
 
 /* ---------- Stat tiles ---------- */
