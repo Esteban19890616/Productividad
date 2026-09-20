@@ -131,7 +131,11 @@ a { color: var(--accent-cian); text-decoration: none; }
   font-size: 20px;
 }
 
-.brand img { width: 108px; height: auto; display: block; }
+.brand img {
+  width: 92px; height: auto; display: block;
+  background: #fff; border-radius: var(--radius-md);
+  padding: 8px 12px;
+}
 
 .nav-link {
   display: flex;
@@ -386,7 +390,11 @@ input:focus, select:focus, textarea:focus {
   text-align: center;
   margin-bottom: 28px;
 }
-.auth-logo img { max-width: 100%; height: auto; }
+.auth-logo img {
+  max-width: 100%; height: auto;
+  background: #fff; border-radius: var(--radius-lg);
+  padding: 14px 20px; box-shadow: var(--shadow-card);
+}
 .auth-error {
   background: var(--critica-bg); color: var(--critica);
   padding: 10px 12px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 16px;
