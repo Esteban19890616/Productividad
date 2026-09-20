@@ -62,6 +62,11 @@
       if (perfil) window.location.href = 'app/mi-dia.html';
     });
 
+    if (new URLSearchParams(location.search).get('sesion_vencida')) {
+      authError.textContent = 'Tu sesión expiró. Inicia sesión de nuevo.';
+      authError.classList.remove('hidden');
+    }
+
     switchLink.addEventListener('click', (e) => {
       e.preventDefault();
       modoRegistro = !modoRegistro;

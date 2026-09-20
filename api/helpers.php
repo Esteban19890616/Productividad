@@ -1,6 +1,12 @@
 <?php
+// 30 días: en el celular, cerrar la pestaña o pasar la app a segundo plano
+// no debería desconectar a alguien en pleno trabajo de campo. `gc_maxlifetime`
+// se alinea con esto para que el servidor no borre la sesión antes de tiempo.
+const DURACION_SESION_SEGUNDOS = 60 * 60 * 24 * 30;
+
+ini_set('session.gc_maxlifetime', (string) DURACION_SESION_SEGUNDOS);
 session_set_cookie_params([
-    'lifetime' => 0,
+    'lifetime' => DURACION_SESION_SEGUNDOS,
     'path'     => '/',
     'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
     'httponly' => true,

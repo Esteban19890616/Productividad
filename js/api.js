@@ -14,6 +14,16 @@ async function llamar(endpoint, opciones = {}) {
   let datos = null;
   try { datos = await resp.json(); } catch { /* respuesta vacía */ }
 
+  // Sesión vencida o cerrada en otra pestaña: en vez de dejar la pantalla
+  // pegada en "cargando" o mostrando un error que nadie alcanza a leer,
+  // regresa al login directamente (excepto en el propio intento de login,
+  // donde un 401 es simplemente "contraseña incorrecta", no sesión vencida).
+  const esLogin = endpoint.startsWith('/login.php') || endpoint.startsWith('/registro.php');
+  if (resp.status === 401 && !esLogin) {
+    window.location.href = '/index.html?sesion_vencida=1';
+    return new Promise(() => {}); // corta la ejecución: ya estamos navegando fuera de esta página
+  }
+
   if (!resp.ok) {
     const error = new Error(datos?.mensaje || datos?.error || `Error ${resp.status}`);
     error.status = resp.status;
