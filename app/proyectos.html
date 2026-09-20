@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Objetivos y proyectos — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Objetivos y proyectos</h1>
+          <div class="subtitle">Objetivo → Proyecto → Proceso → Actividad</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div id="topbar-user"></div>
+          <button class="btn btn-primary" id="btn-nuevo-objetivo">+ Nuevo objetivo</button>
+        </div>
+      </div>
+      <div id="lista-objetivos"><div class="skeleton" style="height:90px;margin-bottom:12px;"></div></div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="../js/proyectos.js"></script>
+</body>
+</html>

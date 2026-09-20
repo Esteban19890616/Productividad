@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Usuarios y roles — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>🛡️ Usuarios y roles</h1>
+          <div class="subtitle">Solo visible para administradores</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+      <div class="card" style="margin-bottom:18px;" id="card-invitar">
+        <div class="card-header"><h3>Invitar nuevo usuario</h3></div>
+        <p style="color:var(--text-secondary); font-size:13px; margin-top:-8px; margin-bottom:16px;">
+          Solo las personas invitadas aquí pueden registrarse en PRISMA. Ingresa su correo,
+          comparte el enlace de la plataforma y podrán crear su propia contraseña.
+        </p>
+        <form id="form-invitar" class="field-row" style="align-items:flex-end;">
+          <div class="field" style="margin-bottom:0;">
+            <label for="inv-email">Correo a invitar</label>
+            <input type="email" id="inv-email" required placeholder="persona@empresa.com" />
+          </div>
+          <div class="field" style="margin-bottom:0; max-width:160px;">
+            <label for="inv-rol">Rol</label>
+            <select id="inv-rol">
+              <option value="USUARIO" selected>USUARIO</option>
+              <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Invitar</button>
+        </form>
+      </div>
+
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-header"><h3>Invitaciones pendientes</h3></div>
+        <div id="tabla-invitaciones"><div class="skeleton" style="height:32px;"></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><h3>Usuarios registrados</h3></div>
+        <div id="tabla-usuarios"><div class="skeleton" style="height:44px;margin-bottom:8px;"></div></div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/usuarios.js"></script>
+</body>
+</html>

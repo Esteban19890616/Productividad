@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radar de pendientes — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>🛰️ Radar de pendientes</h1>
+          <div class="subtitle" id="resumen-radar">Analizando el sistema…</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+      <div id="lista-radar"><div class="skeleton" style="height:60px;margin-bottom:10px;"></div></div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/radar.js"></script>
+</body>
+</html>

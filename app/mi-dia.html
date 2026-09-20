@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi día — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>¿Qué debería hacer hoy?</h1>
+          <div class="subtitle" id="resumen-dia">Cargando tu jornada…</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div id="topbar-user"></div>
+          <button class="btn btn-primary" id="btn-nueva-actividad">+ Nueva actividad</button>
+        </div>
+      </div>
+
+      <div class="grid grid-4" style="margin-bottom:22px;">
+        <div class="stat-tile">
+          <div class="value" id="stat-pendientes">—</div>
+          <div class="label">Pendientes hoy</div>
+        </div>
+        <div class="stat-tile">
+          <div class="value" id="stat-vencidas">—</div>
+          <div class="label">Vencidas</div>
+        </div>
+        <div class="stat-tile">
+          <div class="value" id="stat-completadas">—</div>
+          <div class="label">Completadas hoy</div>
+        </div>
+        <div class="stat-tile">
+          <div class="value" id="stat-carga">—</div>
+          <div class="label">Carga del día</div>
+          <div class="progress-track" style="margin-top:8px;">
+            <div class="progress-fill" id="barra-carga" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header">
+            <h3>🔴 Urgentes y vencidas</h3>
+            <span class="count" id="count-urgentes"></span>
+          </div>
+          <div id="lista-urgentes"><div class="skeleton" style="height:52px;margin-bottom:8px;"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>🟠 Próximas a vencer</h3>
+            <span class="count" id="count-proximas"></span>
+          </div>
+          <div id="lista-proximas"><div class="skeleton" style="height:52px;margin-bottom:8px;"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>🟢 Programadas para hoy</h3>
+            <span class="count" id="count-hoy"></span>
+          </div>
+          <div id="lista-hoy"><div class="skeleton" style="height:52px;margin-bottom:8px;"></div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>📅 Reuniones de hoy</h3>
+            <span class="count" id="count-reuniones"></span>
+          </div>
+          <div id="lista-reuniones"><div class="skeleton" style="height:52px;margin-bottom:8px;"></div></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script type="module" src="../js/mi-dia.js"></script>
+</body>
+</html>

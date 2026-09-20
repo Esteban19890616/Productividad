@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informes — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <style>
+    @media print {
+      .sidebar, .topbar .btn, #filtros-informe, .no-imprimir { display: none !important; }
+      .app-shell { display: block !important; }
+      .main { padding: 0 !important; max-width: none !important; }
+      body { background: white !important; color: black !important; }
+      .card { border: 1px solid #ccc !important; box-shadow: none !important; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>📑 Informes</h1>
+          <div class="subtitle">Resumen de actividad en un periodo</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+
+      <div class="card" id="filtros-informe" style="margin-bottom:18px;">
+        <form id="form-filtros" class="field-row" style="align-items:flex-end; flex-wrap:wrap;">
+          <div class="field" style="margin-bottom:0;">
+            <label for="f-desde">Desde</label>
+            <input type="date" id="f-desde" required />
+          </div>
+          <div class="field" style="margin-bottom:0;">
+            <label for="f-hasta">Hasta</label>
+            <input type="date" id="f-hasta" required />
+          </div>
+          <div class="field hidden" id="campo-responsable" style="margin-bottom:0; min-width:200px;">
+            <label for="f-responsable">Responsable</label>
+            <select id="f-responsable"><option value="">Todos</option></select>
+          </div>
+          <div class="field" style="margin-bottom:0; min-width:200px;">
+            <label for="f-empresa">Empresa</label>
+            <select id="f-empresa"><option value="">Todas</option></select>
+          </div>
+          <button type="submit" class="btn btn-primary">Generar informe</button>
+          <div class="spacer" style="flex:1"></div>
+          <button type="button" class="btn" id="btn-csv">⬇️ Descargar CSV</button>
+          <button type="button" class="btn" id="btn-imprimir">🖨️ Imprimir / PDF</button>
+        </form>
+      </div>
+
+      <div id="resultado-informe">
+        <div class="empty-state">Elige un periodo y genera el informe.</div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/informes.js"></script>
+</body>
+</html>

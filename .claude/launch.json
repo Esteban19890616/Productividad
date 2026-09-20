@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "prisma-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5500"],
+      "port": 5500
+    },
+    {
+      "name": "prisma-php",
+      "runtimeExecutable": "php",
+      "runtimeArgs": ["-S", "localhost:5501"],
+      "port": 5501
+    }
+  ]
+}

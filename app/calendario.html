@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calendario — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <style>
+    .semana { display:grid; grid-template-columns: repeat(7, 1fr); gap:12px; }
+    .dia-col { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px; min-height:220px; display:flex; flex-direction:column; }
+    .dia-col .dia-nombre { font-weight:700; font-size:13px; margin-bottom:2px; }
+    .dia-col .dia-fecha { color:var(--text-muted); font-size:11px; margin-bottom:10px; }
+    .bloque { border-radius:6px; padding:6px 8px; font-size:11px; margin-bottom:6px; color:#05070d; font-weight:600; }
+    @media (max-width: 1000px) { .semana { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>📅 Calendario vivo</h1>
+          <div class="subtitle">Carga real de la semana, no solo eventos</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+      <div class="semana" id="semana"></div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/calendario.js"></script>
+</body>
+</html>

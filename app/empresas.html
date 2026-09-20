@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Empresas — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>🏢 Empresas</h1>
+          <div class="subtitle">Clientes o empresas para las que trabajas — úsalas para sectorizar informes</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+      <div class="topbar" style="margin-bottom:18px;">
+        <div class="spacer" style="flex:1"></div>
+        <button class="btn btn-primary" id="btn-nueva-empresa">+ Nueva empresa</button>
+      </div>
+      <div class="grid grid-3" id="lista-empresas">
+        <div class="skeleton" style="height:120px;"></div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/empresas.js"></script>
+</body>
+</html>

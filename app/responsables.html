@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Centro de responsabilidades — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>¿Quién tiene qué pendiente?</h1>
+          <div class="subtitle">Carga de trabajo por persona</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+      <div class="card">
+        <div id="tabla-responsables"><div class="skeleton" style="height:200px;"></div></div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/responsables.js"></script>
+</body>
+</html>

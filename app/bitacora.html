@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bitácora — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>📝 Bitácora</h1>
+          <div class="subtitle">Registro inmutable de todo lo que ocurre en la plataforma</div>
+        </div>
+        <div id="topbar-user"></div>
+      </div>
+      <div class="card">
+        <div id="lista-bitacora"><div class="skeleton" style="height:40px;margin-bottom:8px;"></div></div>
+      </div>
+    </main>
+  </div>
+  <div id="toast-container"></div>
+  <script type="module" src="../js/bitacora.js"></script>
+</body>
+</html>

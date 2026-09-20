@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Actividades — PRISMA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div class="app-shell" id="app-shell">
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Actividades</h1>
+          <div class="subtitle">Todo lo que tienes bajo tu responsabilidad o creaste</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div id="topbar-user"></div>
+          <button class="btn btn-primary" id="btn-nueva">+ Nueva actividad</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:18px;">
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <select id="f-estado" style="max-width:180px;">
+            <option value="">Todos los estados</option>
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="EN_PROGRESO">En progreso</option>
+            <option value="BLOQUEADA">Bloqueada</option>
+            <option value="COMPLETADA">Completada</option>
+            <option value="CANCELADA">Cancelada</option>
+          </select>
+          <select id="f-orden" style="max-width:220px;">
+            <option value="prioridad">Ordenar por prioridad</option>
+            <option value="fecha">Ordenar por fecha límite</option>
+          </select>
+          <select id="f-tipo" style="max-width:200px;">
+            <option value="">Todos los tipos</option>
+            <option value="TAREA">📋 Tarea</option>
+            <option value="REUNION">👥 Reunión</option>
+            <option value="CLASE">🎓 Clase</option>
+            <option value="CAPACITACION">🧑‍🏫 Capacitación</option>
+            <option value="LLAMADA">📞 Llamada</option>
+            <option value="INSPECCION">🔍 Inspección</option>
+            <option value="VISITA">📍 Visita</option>
+            <option value="DOCUMENTO">📄 Documento/Informe</option>
+            <option value="VIAJE">🚗 Desplazamiento</option>
+            <option value="SEGUIMIENTO">🔁 Seguimiento</option>
+            <option value="OTRO">⚙️ Otro</option>
+          </select>
+          <input type="text" id="f-buscar" placeholder="Buscar por título…" style="flex:1; min-width:200px;" />
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="tabla-actividades"><div class="skeleton" style="height:52px;margin-bottom:8px;"></div></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script type="module" src="../js/actividades.js"></script>
+</body>
+</html>
