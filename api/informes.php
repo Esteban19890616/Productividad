@@ -40,4 +40,19 @@ if ($empresaId !== '') {
     $filas = array_values(array_filter($filas, fn($f) => $f['empresa_id_efectiva'] === $empresaId));
 }
 
+if (!empty($filas)) {
+    $ids = array_column($filas, 'id');
+    $marcadores = implode(',', array_fill(0, count($ids), '?'));
+    $stmtDocs = $pdo->prepare("SELECT id, nombre, ruta_archivo, tipo, actividad_id FROM documentos WHERE actividad_id IN ($marcadores)");
+    $stmtDocs->execute($ids);
+    $docsPorActividad = [];
+    foreach ($stmtDocs->fetchAll() as $doc) {
+        $docsPorActividad[$doc['actividad_id']][] = $doc;
+    }
+    foreach ($filas as &$f) {
+        $f['evidencias'] = $docsPorActividad[$f['id']] ?? [];
+    }
+    unset($f);
+}
+
 responder(['actividades' => $filas]);

@@ -201,6 +201,7 @@ function render(desde, hasta) {
               <th style="padding:8px;">Fecha límite</th>
               <th style="padding:8px;">Estado</th>
               <th style="padding:8px;">Prioridad</th>
+              <th style="padding:8px;">Evidencias</th>
             </tr>
           </thead>
           <tbody>
@@ -213,6 +214,7 @@ function render(desde, hasta) {
                 <td style="padding:8px;">${formatearFecha(a.fecha_limite)}</td>
                 <td style="padding:8px;">${a.estado}</td>
                 <td style="padding:8px;">${a.prioridad_etiqueta !== 'N/A' ? `<span class="badge badge-${a.prioridad_etiqueta}">${a.prioridad_etiqueta}</span>` : '—'}</td>
+                <td style="padding:8px;">${renderEvidenciasInforme(a.evidencias)}</td>
               </tr>
             `).join('')}
           </tbody>
@@ -222,13 +224,23 @@ function render(desde, hasta) {
   `;
 }
 
+function renderEvidenciasInforme(evidencias) {
+  if (!evidencias || evidencias.length === 0) return '<span style="color:var(--text-muted);">—</span>';
+  return `<div style="display:flex; gap:4px; flex-wrap:wrap;">${evidencias.map(d => {
+    const esImagen = d.tipo.startsWith('image/');
+    return esImagen
+      ? `<a href="../${d.ruta_archivo}" target="_blank"><img src="../${d.ruta_archivo}" style="width:32px;height:32px;object-fit:cover;border-radius:4px;" title="${escapeHtml(d.nombre)}" /></a>`
+      : `<a href="../${d.ruta_archivo}" target="_blank" title="${escapeHtml(d.nombre)}" style="font-size:18px;">📄</a>`;
+  }).join('')}</div>`;
+}
+
 function descargarCsv() {
   if (filasInforme.length === 0) { toast('No hay datos para exportar', 'error'); return; }
 
-  const encabezados = ['Actividad', 'Proyecto', 'Empresa', 'Responsable', 'Fecha límite', 'Estado', 'Prioridad', 'Tiempo estimado (min)'];
+  const encabezados = ['Actividad', 'Proyecto', 'Empresa', 'Responsable', 'Fecha límite', 'Estado', 'Prioridad', 'Tiempo estimado (min)', 'Evidencias'];
   const filas = filasInforme.map(a => [
     a.titulo, a.proyecto_nombre || '', a.empresa_nombre || '', a.responsable_nombre || '', a.fecha_limite, a.estado,
-    a.prioridad_etiqueta, a.tiempo_estimado_min,
+    a.prioridad_etiqueta, a.tiempo_estimado_min, (a.evidencias || []).length,
   ]);
 
   const escaparCelda = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;

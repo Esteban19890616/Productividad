@@ -3,3 +3,8 @@ Thumbs.db
 node_modules/
 *.log
 prisma.zip
+
+# Evidencias subidas por los usuarios (contenido, no código del repo)
+uploads/evidencias/*
+!uploads/evidencias/.gitkeep
+!uploads/evidencias/.htaccess

@@ -1,5 +1,5 @@
 // PRISMA — Lógica de "Mi día"
-import { apiGet, apiPost } from './api.js';
+import { apiGet, apiPost, apiUpload } from './api.js';
 import { requerirSesion } from './auth.js';
 import { montarNav } from './nav.js';
 import { toast, abrirModal, cerrarModal, formatearFecha, formatearMinutos, escapeHtml, opcionesTipoActividad, iconoTipo } from './ui.js';
@@ -122,13 +122,13 @@ function renderLista(idLista, idCount, items, permitirReprogramar) {
         </div>
       </div>
       <span class="badge badge-${a.prioridad_etiqueta}">${a.prioridad_etiqueta}</span>
-      <button class="btn btn-sm btn-completar" data-id="${a.id}">✓</button>
+      <button class="btn btn-sm btn-completar" data-id="${a.id}" data-titulo="${escapeHtml(a.titulo)}">✓</button>
       ${permitirReprogramar ? `<button class="btn btn-sm btn-reprogramar" data-id="${a.id}" data-titulo="${escapeHtml(a.titulo)}" data-min="${a.tiempo_estimado_min}">↻ Reprogramar</button>` : ''}
     </div>
   `).join('');
 
   cont.querySelectorAll('.btn-completar').forEach(btn => {
-    btn.addEventListener('click', (e) => { e.stopPropagation(); completarActividad(btn.dataset.id); });
+    btn.addEventListener('click', (e) => { e.stopPropagation(); abrirModalCompletar(btn.dataset.id, btn.dataset.titulo); });
   });
   cont.querySelectorAll('.btn-reprogramar').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -138,15 +138,37 @@ function renderLista(idLista, idCount, items, permitirReprogramar) {
   });
 }
 
-async function completarActividad(id) {
-  try {
-    await apiPost('/actividades.php', { accion: 'completar', id });
-  } catch (e) {
-    toast('No se pudo completar: ' + e.message, 'error');
-    return;
-  }
-  toast('Actividad completada', 'success');
-  cargarTodo();
+function abrirModalCompletar(id, titulo) {
+  abrirModal(`
+    <div class="modal-header"><h3>Completar: ${escapeHtml(titulo)}</h3></div>
+    <p style="color:var(--text-secondary); font-size:14px; margin-bottom:12px;">
+      Puedes adjuntar hasta 4 fotos o PDF como evidencia de que se ejecutó (opcional).
+    </p>
+    <div class="field">
+      <input type="file" id="completar-evidencia" accept="image/png,image/jpeg,image/webp,application/pdf" multiple />
+    </div>
+    <button type="button" class="btn btn-primary" style="width:100%" id="btn-confirmar-completar">Marcar como completada</button>
+  `);
+
+  document.getElementById('btn-confirmar-completar').addEventListener('click', async () => {
+    try {
+      await apiPost('/actividades.php', { accion: 'completar', id });
+
+      const archivos = document.getElementById('completar-evidencia').files;
+      if (archivos.length) {
+        const formData = new FormData();
+        formData.append('actividad_id', id);
+        for (const archivo of archivos) formData.append('archivos[]', archivo);
+        await apiUpload('/documentos.php', formData);
+      }
+    } catch (e) {
+      toast('Error: ' + e.message, 'error');
+      return;
+    }
+    cerrarModal();
+    toast('Actividad completada', 'success');
+    cargarTodo();
+  });
 }
 
 // ---------------- Reprogramación automática ----------------
