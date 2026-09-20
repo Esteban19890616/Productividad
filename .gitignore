@@ -4,6 +4,9 @@ node_modules/
 *.log
 prisma.zip
 
+# Credenciales reales de la base de datos (nunca se suben; sobreviven a los despliegues de Git)
+api/config.local.php
+
 # Evidencias subidas por los usuarios (contenido, no código del repo)
 uploads/evidencias/*
 !uploads/evidencias/.gitkeep

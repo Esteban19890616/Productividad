@@ -40,8 +40,16 @@ Plataforma de gestión de tareas, actividades y procesos administrativos multius
 
 ### 2. Subir los archivos
 
-1. Sube todo el contenido de este repositorio a `public_html/` (o a una subcarpeta si usas un subdominio) vía **Administrador de archivos** o FTP.
-2. Edita **directamente en el servidor** el archivo `api/config.php` con los 4 datos del paso 1. No subas tu contraseña real a GitHub.
+1. Sube todo el contenido de este repositorio a `public_html/` (o a una subcarpeta si usas un subdominio) vía **Administrador de archivos**, FTP, o el despliegue automático desde Git de Hostinger (Avanzado → GIT).
+2. Crea **directamente en el servidor** el archivo `api/config.local.php` (no `config.php` — ese se sobrescribe en cada despliegue) con los 4 datos del paso 1:
+   ```php
+   <?php
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'nombre_de_tu_base_de_datos');
+   define('DB_USER', 'usuario_de_tu_base_de_datos');
+   define('DB_PASS', 'contraseña_de_tu_base_de_datos');
+   ```
+   Este archivo nunca se sube a GitHub (está en `.gitignore`), así que sobrevive a cualquier redespliegue.
 
 ### 3. Crear tu cuenta
 
