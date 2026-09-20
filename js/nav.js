@@ -31,7 +31,7 @@ export async function montarNav(paginaActual) {
   sidebar.className = 'sidebar';
   sidebar.id = 'sidebar';
   sidebar.innerHTML = `
-    <div class="brand"><span class="dot"></span> PRISMA</div>
+    <div class="brand"><img src="../assets/img/logo-prisma.png" alt="PRISMA" /></div>
     ${enlacesHtml}
     ${esAdmin ? `
       <div class="nav-section-label">Administración</div>

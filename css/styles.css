@@ -131,11 +131,7 @@ a { color: var(--accent-cian); text-decoration: none; }
   font-size: 20px;
 }
 
-.brand .dot {
-  width: 12px; height: 12px; border-radius: 50%;
-  background: var(--accent-gradient);
-  box-shadow: var(--shadow-glow);
-}
+.brand img { width: 108px; height: auto; display: block; }
 
 .nav-link {
   display: flex;
@@ -390,9 +386,7 @@ input:focus, select:focus, textarea:focus {
   text-align: center;
   margin-bottom: 28px;
 }
-.auth-logo .dot { margin: 0 auto 14px; width: 46px; height: 46px; border-radius: 14px; }
-.auth-logo h1 { font-size: 24px; }
-.auth-logo p { color: var(--text-secondary); font-size: 13px; margin-top: 6px; }
+.auth-logo img { max-width: 100%; height: auto; }
 .auth-error {
   background: var(--critica-bg); color: var(--critica);
   padding: 10px 12px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 16px;
