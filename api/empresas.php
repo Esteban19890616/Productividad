@@ -8,7 +8,12 @@ $sesion = requerirSesion();
 $pdo = obtenerConexion();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $stmt = $pdo->query('SELECT * FROM empresas ORDER BY nombre');
+    if ($sesion['rol'] === 'ADMINISTRADOR') {
+        $stmt = $pdo->query('SELECT * FROM empresas ORDER BY nombre');
+    } else {
+        $stmt = $pdo->prepare('SELECT * FROM empresas WHERE creado_por = ? ORDER BY nombre');
+        $stmt->execute([$sesion['id']]);
+    }
     responder(['empresas' => $stmt->fetchAll()]);
 }
 
