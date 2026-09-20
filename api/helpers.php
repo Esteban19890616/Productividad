@@ -10,7 +10,11 @@ session_set_cookie_params([
     'path'     => '/',
     'secure'   => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
     'httponly' => true,
-    'samesite' => 'Strict',
+    // 'Lax' (no 'Strict'): con Strict, abrir el sitio desde un enlace externo
+    // o al restaurar una pestaña en el celular puede llegar SIN la cookie de
+    // sesión, haciendo parecer que la sesión "se perdió" cuando en realidad
+    // el navegador simplemente no la envió en esa navegación puntual.
+    'samesite' => 'Lax',
 ]);
 session_start();
 header('Content-Type: application/json; charset=utf-8');

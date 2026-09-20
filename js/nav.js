@@ -45,6 +45,33 @@ export async function montarNav(paginaActual) {
 
   shell.prepend(sidebar);
 
+  // En pantallas angostas el CSS oculta la barra lateral por completo; sin
+  // este botón no habría ninguna forma de abrirla ni de cambiar de página
+  // o cerrar sesión desde el celular.
+  const backdrop = document.createElement('div');
+  backdrop.className = 'sidebar-backdrop';
+  shell.appendChild(backdrop);
+
+  const cerrarMenuMovil = () => {
+    sidebar.classList.remove('open');
+    backdrop.classList.remove('open');
+  };
+
+  const topbar = shell.querySelector('.topbar');
+  if (topbar) {
+    const btnMenu = document.createElement('button');
+    btnMenu.type = 'button';
+    btnMenu.className = 'btn-menu-movil';
+    btnMenu.setAttribute('aria-label', 'Abrir menú');
+    btnMenu.textContent = '☰';
+    topbar.prepend(btnMenu);
+    btnMenu.addEventListener('click', () => {
+      sidebar.classList.add('open');
+      backdrop.classList.add('open');
+    });
+  }
+  backdrop.addEventListener('click', cerrarMenuMovil);
+
   sidebar.querySelectorAll('[data-href]').forEach(el => {
     el.addEventListener('click', () => { window.location.href = el.dataset.href; });
   });

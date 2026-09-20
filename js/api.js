@@ -21,7 +21,10 @@ async function llamar(endpoint, opciones = {}) {
   const esLogin = endpoint.startsWith('/login.php') || endpoint.startsWith('/registro.php');
   if (resp.status === 401 && !esLogin) {
     window.location.href = '/index.html?sesion_vencida=1';
-    return new Promise(() => {}); // corta la ejecución: ya estamos navegando fuera de esta página
+    // Sigue lanzando el error (no lo dejamos "colgado" con una promesa que
+    // nunca resuelve): si por lo que sea la redirección tarda o falla, la
+    // pantalla debe poder mostrar el error en vez de quedarse congelada.
+    throw new Error('Sesión vencida');
   }
 
   if (!resp.ok) {
